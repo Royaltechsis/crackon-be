@@ -2,14 +2,12 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import User, { UserRole } from '../models/User';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_here';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
-
 // Generate JWT token
 const generateToken = (userId: string, role: UserRole): string => {
-  return jwt.sign({ id: userId, role }, JWT_SECRET, {
-    expiresIn: JWT_EXPIRES_IN,
-  });
+  const secret = process.env.JWT_SECRET || 'your_jwt_secret_here';
+  const expiresIn = '7d';
+  
+  return jwt.sign({ id: userId, role }, secret, { expiresIn });
 };
 
 // Register new user

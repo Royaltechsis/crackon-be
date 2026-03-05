@@ -2,8 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { UserRole } from '../models/User';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_here';
-
 interface JwtPayload {
   id: string;
   role: UserRole;
@@ -35,9 +33,10 @@ export const authenticate = async (
     }
 
     const token = authHeader.split(' ')[1];
+    const secret = process.env.JWT_SECRET || 'your_jwt_secret_here';
 
     // Verify token
-    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+    const decoded = jwt.verify(token, secret) as JwtPayload;
     
     // Attach user info to request
     req.userId = decoded.id;
