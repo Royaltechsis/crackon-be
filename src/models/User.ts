@@ -3,11 +3,21 @@ import bcrypt from 'bcrypt';
 
 export type UserRole = 'customer' | 'artisan' | 'admin';
 
+export interface IArtisanProfile {
+  bio?: string;
+  location?: string;
+  skills?: string[];
+  phone?: string;
+  website?: string;
+  portfolio?: string[];
+}
+
 export interface IUser extends Document {
   username: string;
   email: string;
   password: string;
   role: UserRole;
+  profile?: IArtisanProfile;
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
@@ -40,6 +50,14 @@ const userSchema = new Schema<IUser>(
       enum: ['customer', 'artisan', 'admin'],
       default: 'customer',
       required: [true, 'Role is required'],
+    },
+    profile: {
+      bio: { type: String, trim: true, default: '' },
+      location: { type: String, trim: true, default: '' },
+      skills: { type: [String], default: [] },
+      phone: { type: String, trim: true, default: '' },
+      website: { type: String, trim: true, default: '' },
+      portfolio: { type: [String], default: [] },
     },
   },
   {
