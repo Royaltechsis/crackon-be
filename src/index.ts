@@ -8,6 +8,9 @@ import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
 import artisanRoutes from './routes/artisanRoutes';
 import serviceRoutes from './routes/serviceRoutes';
+import listingRoutes from './routes/listingRoutes';
+import applicationRoutes from './routes/applicationRoutes';
+import projectRoutes from './routes/projectRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -66,6 +69,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/artisans', artisanRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/listings', listingRoutes);
+app.use('/api/applications', applicationRoutes);
+app.use('/api/projects', projectRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
